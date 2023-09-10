@@ -1,0 +1,82 @@
+module pythonsyntax
+
+import IO;
+import vis::Text;
+import ParseTree;
+
+lexical Identifier = [a-zA-Z_][a-zA-Z0-9_]*;
+layout WS = [\t-\n\r\ ]*;
+
+start syntax FuncDef = "def" Identifier "(" Parameters? ")" ":" Suite;
+syntax Parameters = Identifier ("," Identifier)*;
+syntax Suite = "{" Statement+ "}";
+syntax Statement = SimpleStatement | CompoundStatement;
+syntax SimpleStatement = SmallStatement (";" SmallStatement)*;
+syntax SmallStatement = ExprStatement | ReturnStatement;
+syntax ExprStatement = TestListStarExpr (AugAssign TestListStarExpr)?;
+syntax TestListStarExpr = (Test | StarExpr) ("," (Test | StarExpr))*;
+syntax Test = OrTest;
+syntax OrTest = AndTest ("or" AndTest)*;
+syntax AndTest = NotTest ("and" NotTest)*;
+syntax NotTest = "not" NotTest | Comparison;
+syntax Comparison = Expr (CompOp Expr)*;
+syntax Expr = XorExpr ("|" XorExpr)*;
+syntax XorExpr = AndExpr ("^" AndExpr)*;
+syntax AndExpr = ShiftExpr ("&" ShiftExpr)*;
+syntax ShiftExpr = ArithExpr (("\<\<" | "\>\>") ArithExpr)*;
+syntax ArithExpr = Term (("+" | "-" ) Term)*;
+syntax Term = Factor (("*" | "@" | "/" | "//" | "%") Factor)*;
+syntax Factor = ("+" | "-" | "~") Factor | AtomTrailer;
+syntax AtomTrailer = Atom Trailer*;
+syntax Power = AtomTrailer ("**" Factor)?;
+syntax Atom = Identifier | IntegerLiteral | "(" Test ")";
+lexical IntegerLiteral = [0-9]+;
+syntax Trailer = "(" ArgList? ")" | "[" SubscriptList "]" | "." Identifier;
+syntax ArgList = Argument ("," Argument)* ","?;
+syntax Subscript = Test ":" Test? ":" Test?;
+syntax ReturnStatement = "return" TestListStarExpr;
+// lexical Newline = [\n\r]+ !>> [\ \t];
+lexical AugAssign  =
+    "+="  |
+    "-="  |
+    "*="  |
+    "@="  |
+    "/="  |
+    "//=" |
+    "%="  |
+    "&="  |
+    "|="  |
+    "^="  |
+    "\<\<=" |
+    "\>\>=" |
+    "**=" |
+    "/="
+    ;
+lexical CompOp =
+    "\<"   |
+    "\>"   |
+    "=="  |
+    "\>="  |
+    "\<="  |
+    "\<\>"  |
+    "!="  |
+    "in"  |
+    "not" "in" |
+    "is"  |
+    "is" "not"
+    ;
+lexical StarExpr =
+     "*" Expr
+     ;
+syntax CompoundStatement = IfStatement | WhileStatement | ForStatement;
+syntax IfStatement = "if" Test ":" Suite ("elif" Test ":" Suite)* ("else" ":" Suite)?;
+syntax WhileStatement = "while" Test ":" Suite;
+syntax ForStatement = "for" ExprList "in" TestList ":" Suite;
+syntax ExprList = Expr ("," Expr)* ","?;
+syntax TestList = Test ("," Test)* ","?;
+
+void main() {
+    str pyfunct = "def hello(x, y): { return x + y }";
+    start[FuncDef] func = parse(#start[FuncDef], pyfunct);
+    println(prettyTree(func));
+}
