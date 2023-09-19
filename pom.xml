@@ -54,6 +54,7 @@
           <srcs>
             <src>${project.basedir}/src/main/rascal</src>
           </srcs>
+    
         </configuration>
       </plugin>
     </plugins>
