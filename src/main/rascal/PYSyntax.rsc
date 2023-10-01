@@ -2,51 +2,90 @@ module PYSyntax
 
 import PYLex;
 
-start syntax Pystate = FuncDef | Statement;
-syntax FuncDef = Funct | Class;
-syntax Funct = "def" Identifier "(" Parameters? ")" Colon FBlock;
-syntax FBlock = "{" StatOrRet "}";
-syntax StatOrRet =  Statement | ReturnStatement;
-syntax Class = "class" Identifier "(" Parameters? ")" Colon "{" (FuncDef | Statement) "}";
-syntax Parameters = Identifier ("," Identifier)*;
-syntax Statement 
-                = ForLoop
-                | Expression 
-                | Assignment
-                | IfStatement
-                | PrintStatement
+start syntax Pystate 
+                = funcDef: FuncDef+ 
+                | statement: Statement+
                 ;
-syntax Assignment = Identifier "=" (Integer | String_Char | Boolean);
-syntax ReturnStatement = "return" Expression;
+syntax FuncDef 
+                = funct: Funct 
+                | class: Class
+                ;
+syntax Funct 
+                = def: "def" Identifier "(" Parameters? ")" ":" FBlock
+                ;
+syntax FBlock 
+                = fblock: "{" StatOrRet "}"
+                ;
+syntax StatOrRet
+                 = stat: Statement 
+                 | returnStatement: ReturnStatement
+                 ;
+syntax Class 
+                = class: "class" Identifier "(" Parameters? ")" ":" "{" FuncOrStatement "}"
+                ;
+syntax FuncOrStatement 
+                = func: FuncDef 
+                | stmt: Statement
+                ;
+syntax Parameters 
+                = parameters: Identifier ("," Identifier)*
+                ;
+syntax Statement 
+                = forLoop: ForLoop
+                | expr: Expression 
+                | assign: Assignment
+                | ifStat: IfStatement
+                | printStat: PrintStatement
+                ;
+syntax Assignment
+                = assignment: Identifier "=" Value
+                ;
+syntax Value 
+                = integer: Integer 
+                | string_val: String 
+                | boolean: Boolean
+                ;
+syntax ReturnStatement 
+                = returnStatement: "return" Expression
+                ;
 syntax Expression 
-                = Identifier
-                > left bracket "(" Expression ")"
-                > left Expression "/" Expression
-                > left Expression "*" Expression
-                > left Expression "+" Expression
-                > left Expression "-" Expression
-                > left Expression "\>" Expression
-                > left Expression "\<" Expression
-                > left Expression "==" Expression
-                > left Expression "\>=" Expression
-                > left Expression "\<=" Expression
+                = identifier: Identifier
+                //> left bracket "(" Expression ")"
+                > left division: Expression "/" Expression
+                > left multiplication: Expression "*" Expression
+                > left addition: Expression "+" Expression
+                > left subtraction: Expression "-" Expression
+                > left greaterThan: Expression "\>" Expression
+                > left lessThan: Expression "\<" Expression
+                > left equal: Expression "==" Expression
+                > left greaterThanOrEqual: Expression "\>=" Expression
+                > left lessThanOrEqual: Expression "\<=" Expression
                 ;
 syntax ForLoop 
-        = "for" Identifier "in" "range" "(" ForParameter ")" Colon Block;
-syntax ForParameter = Integer "," Integer;
-
-syntax PrintStatement = "print" "(" PRValues ")";
-syntax PRValues 
-                = String 
-                | "(" Expression ")"
-                | Identifier
-                | Concat
+                = forloop: "for" Identifier "in" "range" "(" ForParameter ")" ":" Block
                 ;
-syntax Concat = String "~" String;
-syntax IfStatement
-                = If Expression Colon Block ElseStat?;
-syntax ElseStat = "else" Colon Block;
-syntax Block
-        = "{" Statement "}"
-        ;
+syntax ForParameter 
+                = forparameter: Integer "," Integer
+                ;
 
+syntax PrintStatement 
+                = printstatement: "print" "(" PRValues ")"
+                ;
+syntax PRValues 
+                = string: String 
+                | expression: "(" Expression ")"
+                | id: Identifier
+                | conc: Concat
+                ;
+syntax Concat 
+                = concat: String "~" String
+                ;
+syntax IfStatement
+                = ifstatement: "if" Expression ":" Block ElseStat?
+                ;
+syntax ElseStat 
+                = elsestat: "else" ":" Block
+                ;
+syntax Block
+        = block: "{" Statement "}"
+        ;

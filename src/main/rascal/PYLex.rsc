@@ -2,13 +2,13 @@ module PYLex
 
 layout WS = [\t-\n\r\ ]*;
 
-lexical Identifier = ([a-zA-Z_][a-zA-Z0-9_]* ) \ Keywords;
+lexical Identifier 
+            = ([a-z A-Z 0-9 _] !<< [a-z A-Z][a-z A-Z 0-9 _]* !>> [a-z A-Z 0-9 _]) \ Keywords
+	        ;
 lexical Integer = [0-9]+;
-lexical Colon = ":";
 lexical String = [\"] String_Char* [\"];
 lexical String_Char = ![\\ \" \n] | "\\" [\\ \"];
-lexical Boolean = "true" | "false";
-lexical If = "if";
+lexical Boolean = "True" | "False";
 
 lexical Operator = "+" | "-" | "*" | "/" | "\>" | "\<" | "==" | "\>=" | "\<=";
 

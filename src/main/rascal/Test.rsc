@@ -1,24 +1,24 @@
 module Test
 
+import PYLex;
 import ParseTree;
 import vis::Text;
 import IO;
 import PYSyntax;
-import PYLex;
 import Exception;
+import Ast;
 
 void main() {
     try{
-        str pyfunct = "def add(x, y): {return x + y}";
-        start[Pystate] func = parse(#start[Pystate], pyfunct);
+        loc FileLoc = |project://pythonsyntax/src/resources/test.tap|;
 
-        //print("this is " + pyfunct + " parsetree");
+        str pyfunct = readFile(FileLoc);
+        Tree func = parse(#start[Pystate], pyfunct);
+        //print parsetree
         println(prettyTree(func));
-        
-        str pyloop = "def loop(): {for i in range(0, 5): {print(i)}} ";
-        start[Pystate] loopfunc = parse(#start[Pystate], pyloop);
 
-        //print("this is " + pyloop + " parsetree");
-        println(prettyTree(loopfunc));
+        //ast implode
+        Pystate adtfunc = implode(#Pystate, func);
+        println(adtfunc);
     }catch ParseError(e): println("error failed at <e>");
 }
