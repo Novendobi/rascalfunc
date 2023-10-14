@@ -1,0 +1,7 @@
+test Ok1 [[ 1 + 2 ]]
+
+test Ok1 [[ 1 - 2 ]]
+
+test Ok1 [[ 1 * 2 ]]
+
+test Ok1 [[ (1 - 2) ]]

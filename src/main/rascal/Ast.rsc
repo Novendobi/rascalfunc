@@ -12,7 +12,7 @@ data FuncDef
             | class(Class c)
             ;
 data Funct 
-            = def(str identifier, Parameters funcparams, FBlock fblock)
+            = def(str identifier, list[Parameters] funcparams, FBlock fblock)
             ;
 data FBlock 
             = fblock(StatOrRet stat_or_ret)
@@ -29,7 +29,7 @@ data FuncOrStatement
             | stmt(Statement sm)
             ;
 data Parameters
-            = parameters(list[str] identifiers)
+            = parameters(str identifier, list[str] moreidentifiers)
             ;
 data Statement
             = forLoop(ForLoop for_loop)
@@ -51,7 +51,9 @@ data ReturnStatement
             ;
 data Expression
             = identifier(str identifier)
-            //| \bracket(Expression exp)
+            | integer(int integer)
+            | boolean(bool boolean)
+            | Bracket(Expression exp)
             | division(Expression left, Expression right)
             | multiplication(Expression left, Expression right)
             | addition(Expression left, Expression right)

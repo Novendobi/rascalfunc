@@ -8,7 +8,7 @@ lexical Identifier
 lexical Integer = [0-9]+;
 lexical String = [\"] String_Char* [\"];
 lexical String_Char = ![\\ \" \n] | "\\" [\\ \"];
-lexical Boolean = "True" | "False";
+lexical Boolean = "true" | "false";
 
 lexical Operator = "+" | "-" | "*" | "/" | "\>" | "\<" | "==" | "\>=" | "\<=";
 

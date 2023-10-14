@@ -1,6 +1,6 @@
 module PYSyntax
 
-import PYLex;
+extend PYLex;
 
 start syntax Pystate 
                 = funcDef: FuncDef+ 
@@ -50,7 +50,9 @@ syntax ReturnStatement
                 ;
 syntax Expression 
                 = identifier: Identifier
-                //> left bracket "(" Expression ")"
+                | integer: Integer
+                | boolean: Boolean
+                > bracket Bracket: "(" Expression ")"
                 > left division: Expression "/" Expression
                 > left multiplication: Expression "*" Expression
                 > left addition: Expression "+" Expression
