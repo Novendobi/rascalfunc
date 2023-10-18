@@ -12,7 +12,7 @@ data FuncDef
             | class(Class c)
             ;
 data Funct 
-            = def(str identifier, list[Parameters] funcparams, FBlock fblock)
+            = def(str identifier, Parameters funcparams, FBlock fblock)
             ;
 data FBlock 
             = fblock(StatOrRet stat_or_ret)
@@ -22,14 +22,14 @@ data StatOrRet
             | returnStatement(ReturnStatement r_stat)
             ; 
 data Class
-            = class(str identifier, list[Parameters] classparams, FuncOrStatement funcorstmt)
+            = class(str identifier, Parameters classparams, FuncOrStatement funcorstmt)
             ;
 data FuncOrStatement 
             = func(FuncDef fd)
             | stmt(Statement sm)
             ;
 data Parameters
-            = parameters(str identifier, list[str] moreidentifiers)
+            = parameters(list[str] moreidentifiers)
             ;
 data Statement
             = forLoop(ForLoop for_loop)
@@ -65,7 +65,7 @@ data Expression
             | lessThanOrEqual(Expression left, Expression right)
             ;
 data ForLoop
-            = forloop(str identifier, ForParameter for_params, Block block)
+            = forloop(str fidentifier, ForParameter for_params, Block block)
             ;
 data ForParameter
             = forparameter(int begin, int end)

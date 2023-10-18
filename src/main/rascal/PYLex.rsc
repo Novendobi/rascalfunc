@@ -10,19 +10,35 @@ lexical String = [\"] String_Char* [\"];
 lexical String_Char = ![\\ \" \n] | "\\" [\\ \"];
 lexical Boolean = "true" | "false";
 
-lexical Operator = "+" | "-" | "*" | "/" | "\>" | "\<" | "==" | "\>=" | "\<=";
+lexical Operator 
+        = "+" 
+        | "-" 
+        | "*" 
+        | "/" 
+        | "\>" 
+        | "\<" 
+        | "==" 
+        | "\>=" 
+        | "\<="
+        | "++"
+        | "--"
+        | "+="
+        | "-="
+        | "*="
+        | "/="
+        ;
 
 keyword Keywords 
-                = "class"
-                | "def"
-                | "else"
-                | "for"
-                | "if" 
-                | "in"  
-                | "while"
-                | "range"
-                | "return"
-                | ":"
-                | Boolean
-                ;
+        = "class"
+        | "def"
+        | "else"
+        | "for"
+        | "if" 
+        | "in"  
+        | "while"
+        | "range"
+        | "return"
+        | ":"
+        | Boolean
+        ;
                 

@@ -11,7 +11,7 @@ syntax FuncDef
                 | class: Class
                 ;
 syntax Funct 
-                = def: "def" Identifier "(" Parameters? ")" ":" FBlock
+                = def: "def" Identifier "(" Parameters ")" ":" FBlock
                 ;
 syntax FBlock 
                 = fblock: "{" StatOrRet "}"
@@ -21,14 +21,14 @@ syntax StatOrRet
                  | returnStatement: ReturnStatement
                  ;
 syntax Class 
-                = class: "class" Identifier "(" Parameters? ")" ":" "{" FuncOrStatement "}"
+                = class: "class" Identifier "(" Parameters ")" ":" "{" FuncOrStatement "}"
                 ;
 syntax FuncOrStatement 
                 = func: FuncDef 
                 | stmt: Statement
                 ;
 syntax Parameters 
-                = parameters: Identifier ("," Identifier)*
+                = parameters: {Identifier ","}*
                 ;
 syntax Statement 
                 = forLoop: ForLoop
