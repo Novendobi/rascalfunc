@@ -5,7 +5,7 @@ import PYLex;
 
 data Pystate 
             = funcDef(list[FuncDef] f)
-            | statement(list[Statement] s)
+            | iExp(Expression iexp)
             ;
 data FuncDef 
             = funct(Funct f)

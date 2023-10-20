@@ -4,7 +4,7 @@ extend PYLex;
 
 start syntax Pystate 
                 = funcDef: FuncDef+ 
-                | statement: Statement+
+                | iExp: Expression
                 ;
 syntax FuncDef 
                 = funct: Funct 

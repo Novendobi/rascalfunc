@@ -4,6 +4,7 @@ extend PYLex;
 
 start syntax ForLoop
         = forLoop: "for" "(" Initialization ";" Condition ";" Update ")" Statement
+        | funct: Funct
         ;
 syntax Initialization
         = init: "let" Identifier "=" Integer
@@ -32,5 +33,17 @@ syntax Expression
 syntax Statement
         = statm: Identifier "=" Expression ";"
         | print: "print" "(" Identifier ")" ";"
+        | exp: Expression ";"
         | statement: "{" {Statement ","}* "}"
+        ;
+syntax Funct
+        = function: "function" Identifier "(" FParameter ")" Fblock
+        ;
+syntax FParameter
+        = fParamId: {Identifier ","}*
+        | fParamInt: {Integer ","}*
+        ;
+syntax Fblock
+        = stat: Statement
+        | ret: "{" "return" Expression "}"
         ;
